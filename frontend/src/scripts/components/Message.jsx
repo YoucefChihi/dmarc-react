@@ -20,28 +20,28 @@ const Message = ({t, data}) => {
     body,
   } = data
   return <div className={`message ${isOpen && 'open'}`}>
-    <div className="info">
+    <div className="info" onClick={() => {setIsOpen(!isOpen)}}>
       <span>{name}</span>
       <span>{subject}</span>
       <span>{formatDate(date)}</span>
-      <span className="collapse-btn" onClick={() => {setIsOpen(!isOpen)}}>
+      <span className="collapse-btn">
         <CollapseIcon />
       </span>
     </div>
     <div className="summary">
-      <div className="row">{email}</div>
+      <h4 className="row">{email}</h4>
       <div className="row">
-        {t ('app:dkim-validation')} : <span className={`check ${dkim === 'pass' ? 'green' : 'red'}`}></span>
+        {t ('app:dkim-validation')} : <div className={`check ${dkim === 'pass' ? 'green' : 'red'}`}></div>
       </div>
       <div className="row">
-        {t ('app:dmarc-validation')} : <span className={`check ${dmarc === 'pass' ? 'green' : 'red'}`}></span>
+        {t ('app:dmarc-validation')} : <div className={`check ${dmarc === 'pass' ? 'green' : 'red'}`}></div>
       </div>
       <div className="row">
-        {t ('app:spf-validation')} : <span className={`check ${spf === 'pass' ? 'green' : 'red'}`}></span>
+        {t ('app:spf-validation')} : <div className={`check ${spf === 'pass' ? 'green' : 'red'}`}></div>
       </div>
-      <div className="row">
+      <section className="row">
         {t ('app:email-text')} : <p>{body}</p>
-      </div>
+      </section>
     </div>
   </div>
 }
