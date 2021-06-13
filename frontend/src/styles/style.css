@@ -79,6 +79,15 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
 }
 
+.info span:nth-child(2) {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 48px;
+  text-align: center;
+}
+
 .info .collapse-btn {
   position: absolute;
   top: calc(50% - 12px);
