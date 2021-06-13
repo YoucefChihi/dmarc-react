@@ -9,28 +9,34 @@ class App extends Component {
   static propTypes = {
     t: PropTypes.function,
     data: PropTypes.shape({
-      body: PropTypes.string,
-      date: PropTypes.string,
-      from: PropTypes.shape({
-        email: PropTypes.string,
-        name: PropTypes.string,
+      counts: PropTypes.shape({
+        messageTotal: PropTypes.string,
+        wordTotal: PropTypes.string,
+        wpmTotal: PropTypes.string,
       }),
-      id: PropTypes.string,
-      protocolStatus: PropTypes.shape({
-        dkim: PropTypes.string,
-        spf: PropTypes.string,
-        dmarc: PropTypes.string,
-      }),
-      subject: PropTypes.string,
-      threadId: PropTypes.string,
-      wordCount: PropTypes.number
+      messages: PropTypes.arrayOf(PropTypes.shape({
+        body: PropTypes.string,
+        date: PropTypes.string,
+        from: PropTypes.shape({
+          email: PropTypes.string,
+          name: PropTypes.string,
+        }),
+        id: PropTypes.string,
+        protocolStatus: PropTypes.shape({
+          dkim: PropTypes.string,
+          spf: PropTypes.string,
+          dmarc: PropTypes.string,
+        }),
+        subject: PropTypes.string,
+        threadId: PropTypes.string,
+        wordCount: PropTypes.number,
+      }))
     }),
   }
 
   render() {
     const { t, data } = this.props;
     const { counts, messages } = data;
-    console.log('messssss', messages)
     return (
       <div>
         <h1>{t('app:title-home')}</h1>
