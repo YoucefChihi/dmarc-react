@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {translate} from 'react-i18next';
 import Message from './Message'
+import WordCount from './WordCount'
 
 class App extends Component {
   static propTypes = {
@@ -44,6 +45,9 @@ class App extends Component {
     return (
       <div>
         <h1>{t ('app:title-home')}</h1>
+        <h2>{t ('app:word-count-summary')}</h2>
+        <WordCount data={counts} />
+        <h2>{t ('app:emails')}</h2>
         {
           messages
             .sort((a, b) => new Date(b.date) - new Date(a.date))

@@ -25,6 +25,7 @@ export default function d3Wrap(methods) {
     constructor(props) {
       super(props);
       this.onResize = throttle(this.componentDidUpdate.bind(this), 500);
+      console.log('D3Wrap constructed', props)
     }
 
     componentDidMount() {

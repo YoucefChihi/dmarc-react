@@ -4,5 +4,8 @@
   "dmarc-validation": "Pass DMARC validation",
   "spf-validation": "Pass SPF validation",
   "email-text": "Email text",
-  "description-home": "I'm a React Sift displaying {{count}} emails."
+  "emails": "Emails",
+  "word-count-summary": "Word Count Summary",
+  "daily": "Daily",
+  "weekly": "Weekly"
 }

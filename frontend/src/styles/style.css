@@ -27,6 +27,10 @@ h1, h2, h3, h4, h5, h6 {
   box-sizing: border-box;
 }
 
+#root {
+  padding: 8px;
+}
+
 .responsive-text-large {
   font-size: 1em;
 }
@@ -122,4 +126,15 @@ section.row p {
 
 .check.red {
   background-color: var(--red);
+}
+
+.chart-wrapper {
+  overflow-x: auto;
+}
+
+@media (--above-tablet) {
+  .chart-wrapper {
+    width: 50%;
+    display: inline-block;
+  }
 }
