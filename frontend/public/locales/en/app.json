@@ -1,4 +1,8 @@
 {
   "title-home": "Gmail",
+  "dkim-validation": "Pass DKIM validation",
+  "dmarc-validation": "Pass DMARC validation",
+  "spf-validation": "Pass SPF validation",
+  "email-text": "Email text",
   "description-home": "I'm a React Sift displaying {{count}} emails."
 }
