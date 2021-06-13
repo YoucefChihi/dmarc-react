@@ -45,12 +45,26 @@ export default class MyController extends SiftController {
   getCounts() {
     return this.storage.get({
       bucket: 'counts',
-      keys: ['MESSAGES', 'WORDS']
+      keys: ['MESSAGES', 'WORDS', 'WEEKLY', 'DAILY']
     }).then((values) => {
+      let weeklyWordCount = values[2].value || '{}'
+      let dailyWordCount = values[3].value || '{}'
+      try {
+        weeklyWordCount = JSON.parse(weeklyWordCount)
+        dailyWordCount = JSON.parse(dailyWordCount)
+      } catch (e) {
+        console.error(
+          'email-sift-web: getCounts could not parse',
+          weeklyWordCount,
+          dailyWordCount
+        )
+      }
       return {
         messageTotal: values[0].value || 0,
         wordTotal: values[1].value || 0,
-        wpmTotal: ((values[1].value || 0) / (values[0].value || 1)).toFixed(2)
+        wpmTotal: ((values[1].value || 0) / (values[0].value || 1)).toFixed(2),
+        weeklyWordCount,
+        dailyWordCount,
       };
     });
   }

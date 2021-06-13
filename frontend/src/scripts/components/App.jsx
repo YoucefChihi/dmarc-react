@@ -13,6 +13,8 @@ class App extends Component {
         messageTotal: PropTypes.string,
         wordTotal: PropTypes.string,
         wpmTotal: PropTypes.string,
+        weeklyWordCount: PropTypes.any,
+        dailyWordCount: PropTypes.any,
       }),
       messages: PropTypes.arrayOf (
         PropTypes.shape ({
@@ -38,11 +40,15 @@ class App extends Component {
 
   render () {
     const {t, data} = this.props;
-    const {messages} = data;
+    const {messages, counts} = data;
     return (
       <div>
         <h1>{t ('app:title-home')}</h1>
-        {messages.map ((m, key) => <Message key={key} data={m}/>)}
+        {
+          messages
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map ((m, key) => <Message key={key} data={m}/>)
+        }
       </div>
     );
   }
