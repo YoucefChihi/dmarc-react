@@ -3,9 +3,6 @@
 */
 'use strict';
 
-// Javascript nodes are run in a Node.js sandbox so you can require dependencies following the node paradigm
-// e.g. var moment = require('moment');
-
 // Entry point for DAG node
 module.exports = function (got) {
   // inData contains the key/value pairs that match the given query
@@ -16,10 +13,20 @@ module.exports = function (got) {
   const results = inData.data.map(({ value: valueBuffer }) => {
     // Parse the JMAP information for each message more info here: https://docs.redsift.com/docs/server-code-jmap
     const emailJmap = JSON.parse(valueBuffer);
-    const { id, threadId, subject, textBody, strippedHtmlBody } = emailJmap;
-
+    const {
+      id,
+      threadId,
+      subject,
+      textBody,
+      strippedHtmlBody,
+      headers,
+      date,
+      from,
+    } = emailJmap;
+    const authenticationsResults = headers['Authentication-Results'] || ''
+    const protocolStatus = extractProtocolStatus(authenticationsResults)
     // Not all emails contain a textBody so we do a cascade selection
-    const body = textBody || strippedHtmlBody || '';
+    const body = textBody || strippedHtmlBody || '';    
     const wordCount = countWords(body);
 
     const key = `${threadId}/${id}`;
@@ -28,7 +35,10 @@ module.exports = function (got) {
       body,
       subject,
       threadId,
-      wordCount
+      wordCount,
+      protocolStatus,
+      date,
+      from,
     };
 
     // Emit into "messages-st" store so count can be calculated by the "Count" node
@@ -62,4 +72,20 @@ function countWords(body) {
   s = s.replace(/(^\s*)|(\s*$)/gi, '');
   s = s.replace(/[ ]{2,}/gi, '');
   return s.split(' ').length;
+}
+
+function extractProtocolStatus (authenticationsResults) {
+  const protocols = ['dkim', 'dmarc', 'spf']
+  const split = authenticationsResults.split('; ')
+  const protocolStatus = {}
+  split.forEach(item => {
+    const [protocol, status] = item
+      .split(' ')[0]
+      .split('=')
+    const isProtocol = protocols.some(p => p === protocol)
+    if (isProtocol) {
+      protocolStatus[protocol] = status
+    }
+  })
+  return protocolStatus
 }
